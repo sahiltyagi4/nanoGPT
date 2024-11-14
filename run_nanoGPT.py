@@ -1,7 +1,7 @@
 import os
 import argparse
 
-from nanoGPT.train_nanoGPT import  OmniLearnTrainNanoGPT
+from train_nanoGPT import  OmniLearnTrainNanoGPT
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

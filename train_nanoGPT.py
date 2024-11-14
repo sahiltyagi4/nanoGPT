@@ -13,7 +13,7 @@ import torch
 import torch.distributed as dist
 from torch._C._distributed_c10d import ReduceOp
 
-from nanoGPT.model import GPTConfig, GPT
+from model import GPTConfig, GPT
 
 million = 1e6
 
@@ -62,8 +62,7 @@ class OmniLearnTrainNanoGPT(object):
         self.compile = True  if args.compile == 'True' else False
 
         self.config_keys = [k for k, v in globals().items() if not k.startswith('_') and isinstance(v, (int, float, bool, str))]
-        # exec(open('configurator.py').read())  # overrides from command line or config file
-        exec(open('nanoGPT/configurator.py').read())  # overrides from command line or config file
+        exec(open('configurator.py').read())  # overrides from command line or config file
         self.config = {k: globals()[k] for k in self.config_keys}  # will be useful for logging
 
         timeout = datetime.timedelta(seconds=3000 * 60 * 60 * 100)
