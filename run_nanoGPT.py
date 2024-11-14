@@ -43,6 +43,7 @@ if __name__ == "__main__":
     parser.add_argument('--dir', type=str, default='/')
     parser.add_argument('--interface', type=str, default='eth0')
     parser.add_argument('--master-addr', type=str, default='127.0.0.1')
+    parser.add_argument('--master-port', type=int, default=29386)
 
     args = parser.parse_args()
 
