@@ -61,9 +61,9 @@ class OmniLearnTrainNanoGPT(object):
         self.dtype = args.dtype
         self.compile = True  if args.compile == 'True' else False
 
-        self.config_keys = [k for k, v in globals().items() if not k.startswith('_') and isinstance(v, (int, float, bool, str))]
-        exec(open('configurator.py').read())  # overrides from command line or config file
-        self.config = {k: globals()[k] for k in self.config_keys}  # will be useful for logging
+        # self.config_keys = [k for k, v in globals().items() if not k.startswith('_') and isinstance(v, (int, float, bool, str))]
+        # exec(open('configurator.py').read())  # overrides from command line or config file
+        # self.config = {k: globals()[k] for k in self.config_keys}  # will be useful for logging
 
         timeout = datetime.timedelta(seconds=3000 * 60 * 60 * 100)
         tcp_addr = 'tcp://' + str(args.master_addr) + ':' + str(args.master_port)
@@ -190,8 +190,8 @@ class OmniLearnTrainNanoGPT(object):
             override_args = dict(dropout=self.dropout)
             self.model = GPT.from_pretrained(self.init_from, override_args)
             # read off the created config params, so we can store them into checkpoint correctly
-            for k in ['n_layer', 'n_head', 'n_embd', 'block_size', 'bias', 'vocab_size']:
-                model_args[k] = getattr(self.model.config, k)
+            # for k in ['n_layer', 'n_head', 'n_embd', 'block_size', 'bias', 'vocab_size']:
+            #     model_args[k] = getattr(self.model.config, k)
 
         # crop down the model block size if desired, using model surgery
         if self.block_size < self.model.config.block_size:
@@ -237,7 +237,7 @@ class OmniLearnTrainNanoGPT(object):
                             'model_args': model_args,
                             'iter_num': iter_num,
                             'best_val_loss': best_val_loss,
-                            'config': self.config,
+                            #'config': self.config,
                         }
                         print(f"saving checkpoint to {self.out_dir}")
                         torch.save(checkpoint, os.path.join(self.out_dir, 'ckpt.pt'))
