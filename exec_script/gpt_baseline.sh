@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # install tiktoken and hugging face datasets
-cd /workspace/
+cd /workspace/nanoGPT
 
 outdir='/workspace/output/'
 dir='/workspace/output/'
@@ -15,5 +15,5 @@ procrank=$(($rank-1))
 container='worker'$rank
 echo '###### going to launch training for rank '$procrank ' on container '$container' with bsz '$batchsize
 
-python3 nanoGPT.run_nanoGPT.py --dir=$dir --interface=$interface --batch-size=$batchsize --world-size=$worldsize \
+python3 run_nanoGPT.py --dir=$dir --interface=$interface --batch-size=$batchsize --world-size=$worldsize \
 --master-addr=$addr --rank=$procrank --out-dir=$outdir &
