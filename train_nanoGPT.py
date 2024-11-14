@@ -13,7 +13,7 @@ import torch
 import torch.distributed as dist
 from torch._C._distributed_c10d import ReduceOp
 
-from model import GPTConfig, GPT
+from nanoGPT.model import GPTConfig, GPT
 
 million = 1e6
 
