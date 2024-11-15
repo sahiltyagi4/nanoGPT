@@ -94,7 +94,6 @@ class OmniLearnTrainNanoGPT(object):
         args.hostname = socket.gethostname()
         args.tokens_per_iter = self.tokens_per_iter
         logging.info(f'model arguments are {args}')
-        torch._dynamo.config.verbose = True
 
     def get_batch(self, split):
         if split == 'train':
