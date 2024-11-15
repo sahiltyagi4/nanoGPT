@@ -28,7 +28,8 @@ class OmniLearnTrainNanoGPT(object):
         self.always_save_checkpoint = True if args.always_save_checkpoint == 'True' else True
         self.init_from = args.init_from  # 'scratch' or 'resume' or 'gpt2*'
         # wandb logging
-        self.wandb_log = False  if args.wandb_log == 'False' else True
+        # self.wandb_log = False  if args.wandb_log == 'False' else True
+        self.wandb_log = False
         self.wandb_project = args.wandb_project
         self.wandb_run_name = args.wandb_run_name
         # data
@@ -50,7 +51,8 @@ class OmniLearnTrainNanoGPT(object):
         self.beta2 = args.beta2
         self.grad_clip = args.grad_clip
         # learning rate decay settings
-        self.decay_lr = True  if args.decay_lr == 'True' else False
+        # self.decay_lr = True  if args.decay_lr == 'True' else False
+        self.decay_lr = True
         self.warmup_iters = args.warmup_iters
         self.lr_decay_iters = args.lr_decay_iters
         self.min_lr = args.min_lr
@@ -59,7 +61,8 @@ class OmniLearnTrainNanoGPT(object):
         # system
         self.device = torch.device(args.device)
         self.dtype = args.dtype
-        self.compile = True  if args.compile == 'True' else False
+        # self.compile = False if args.compile == 'False' else True
+        self.compile = False
 
         # self.config_keys = [k for k, v in globals().items() if not k.startswith('_') and isinstance(v, (int, float, bool, str))]
         # exec(open('configurator.py').read())  # overrides from command line or config file
@@ -91,6 +94,7 @@ class OmniLearnTrainNanoGPT(object):
         args.hostname = socket.gethostname()
         args.tokens_per_iter = self.tokens_per_iter
         logging.info(f'model arguments are {args}')
+        torch._dynamo.config.verbose = True
 
     def get_batch(self, split):
         if split == 'train':
@@ -207,10 +211,10 @@ class OmniLearnTrainNanoGPT(object):
         checkpoint = None  # free up memory
 
         # compile the model
-        if compile:
-            print("compiling the model... (takes a ~minute)")
-            unoptimized_model = self.model
-            self.model = torch.compile(self.model)  # requires PyTorch 2.0
+        # if compile:
+        #     print("compiling the model... (takes a ~minute)")
+        #     unoptimized_model = self.model
+        #     self.model = torch.compile(self.model)  # requires PyTorch 2.0
 
         # training loop
         X, Y = self.get_batch('train')  # fetch the very first batch

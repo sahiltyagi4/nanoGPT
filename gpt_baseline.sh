@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# install tiktoken and hugging face datasets
+# kill -s 9 `ps -ef | grep run_nanoGPT.py | grep -v grep | awk '{print $2}'`
+
 cd /workspace/nanoGPT
 
 outdir='/workspace/output/'
